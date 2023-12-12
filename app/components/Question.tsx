@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import Link from "next/link";
+import Image from "next/image";
 
 type Props = {
     title: string
@@ -100,7 +101,7 @@ export default function Question({title,icon,questions}: Props) {
           <div className="bg-white rounded-2xl p-12">
             <div className="flex justify-start gap-2 items-center">
             <div className="p-2 bg-slate-100 rounded">
-              <img src={icon} 
+              <Image src={'.'+icon} 
               alt={title} width={24}
               height={24}/> 
             </div>

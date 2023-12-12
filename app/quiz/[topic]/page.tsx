@@ -32,7 +32,7 @@ export default async function page({params:{topic}}:Props) {
     <div className="flex justify-between mb-4">
       <div className="flex justify-start gap-2 items-center">
             <div className="p-2 bg-slate-100 rounded">
-              <Image src={obj.icon}
+              <Image src={'.'+obj.icon}
               alt={obj.title} width={24}
               height={24}/> 
             </div>
