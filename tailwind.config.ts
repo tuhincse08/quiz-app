@@ -24,7 +24,7 @@ const config: Config = {
   plugins: [require("daisyui")],
   daisyui: {
         themes: [
-          {'dark': {
+          {dark: {
             "primary": "#A729F5",
             "primary-focus": "#A729F5",
             "primary-content": "#E2E8F0"
@@ -32,7 +32,7 @@ const config: Config = {
            
           }},
 
-          {'light': {
+          {light: {
             "primary": "#A729F5",
             "primary-focus": "#A729F5",
             "primary-content": "#E2E8F0"

@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Link from "next/link";
 import Image from "next/image";
 
@@ -17,7 +17,7 @@ export default function Question({title,icon,questions}: Props) {
     const [current,setCurrent] = useState(0);
     const [buttonType, setButtonType] = useState('Submit Answer');
     const [err,setErr] = useState('');
-    const [rightAns, setRightAns] = useState(0);
+    const rightAns = useRef(0);
     const letter = ['A','B','C','D'];
 
     const handleClick = ()=>{
@@ -34,15 +34,14 @@ export default function Question({title,icon,questions}: Props) {
               
               
             
-            //abc.find(r => r.checked).value;
 
             if (!ele) {
               setErr('Please Select An Answer');
               return;
             }
             if(questions[current].answer === ele?.value){
-              setRightAns(a => a + 1);
-              
+              rightAns.current = rightAns.current + 1;
+              //ele.
             }
             else{
               console.log("Wrong Answer")
@@ -108,7 +107,7 @@ export default function Question({title,icon,questions}: Props) {
             <h2 className="text-xl ">{title}</h2>
             </div>
 
-            <h1 className="text-6xl">{rightAns}</h1>
+            <h1 className="text-6xl">{rightAns.current}</h1>
             <p>out of {questions.length}</p>
 
             <Link href="/"><button className="btn btn-primary mt-4"> Play Again</button></Link>
