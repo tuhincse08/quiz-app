@@ -14,7 +14,7 @@ type Props = {
   }
 
 export default function Question({title,icon,questions}: Props) {
-    const [current,setCurrent] = useState(0);
+    const currentQ = useRef(0);
     const [buttonType, setButtonType] = useState('Submit Answer');
     const [err,setErr] = useState('');
     const rightAns = useRef(0);
@@ -24,7 +24,7 @@ export default function Question({title,icon,questions}: Props) {
       const ele = document.querySelector<HTMLInputElement>('input[name=hosting]:checked')
 
             if(buttonType ==='Next Question'){
-              setCurrent(current + 1);
+              currentQ.current = currentQ.current + 1;
               if(ele)
                 ele.checked = false;
               setErr('');
@@ -39,7 +39,7 @@ export default function Question({title,icon,questions}: Props) {
               setErr('Please Select An Answer');
               return;
             }
-            if(questions[current].answer === ele?.value){
+            if(questions[currentQ.current].answer === ele?.value){
               rightAns.current = rightAns.current + 1;
               //ele.
             }
@@ -50,31 +50,31 @@ export default function Question({title,icon,questions}: Props) {
             setErr('');
             setButtonType('Next Question');
 
-            if(current === (questions.length-1)) 
-              setCurrent(current +1)
+            if(currentQ.current === (questions.length-1)) 
+              currentQ.current = currentQ.current + 1;
     }
     
   return (
     <>
     
     <div className="grid grid-cols-2 gap-6 place-content-center">
-        {(current < (questions.length)) && <><div>
-            <p className="italic"> Question {current + 1} of {questions.length}</p>
-            <h2 className="text-2xl font-bold">{questions[current].question}</h2>
+        {(currentQ.current < (questions.length)) && <><div>
+            <p className="italic"> Question {currentQ.current + 1} of {questions.length}</p>
+            <h2 className="text-2xl font-bold">{questions[currentQ.current].question}</h2>
            
-            <progress className="progress my-4 w-full bg-slate-400 progress-primary" value={(current +1)/questions.length*100} max="100"></progress>
+            <progress className="progress my-4 w-full bg-slate-400 progress-primary" value={(currentQ.current +1)/questions.length*100} max="100"></progress>
         </div>
         
         <div>
           
-            {questions[current].options.map((opt,index) =>
+            {questions[currentQ.current].options.map((opt,index) =>
         <>
         <div className="mb-2">  
 
-        <input type="radio" id={"hosting-small" + current+ index} name={"hosting"} value={opt} className="hidden peer"  />
-        <label htmlFor={"hosting-small"+current+index} className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary peer-checked:text-primary hover:text-gray-600 hover:bg-gray-100 ">                           
+        <input type="radio" id={"hosting-small" + currentQ.current+ index} name={"hosting"} value={opt} className="hidden peer"  />
+        <label htmlFor={"hosting-small"+currentQ.current+index} className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary peer-checked:text-primary hover:text-gray-600 hover:bg-gray-100 ">                           
             <div className="flex justify-start gap-3 items-center">
-                <label htmlFor={"hosting-small"+current+index} className="px-3 py-2 bg-slate-200 text-gray-600 rounded peer-checked:bg-violet-500">{letter[index]}</label>
+                <label htmlFor={"hosting-small"+currentQ.current+index} className="px-3 py-2 bg-slate-200 text-gray-600 rounded peer-checked:bg-violet-500">{letter[index]}</label>
                 <div className="w-full text-lg font-semibold">{opt}</div>
                
             </div>
@@ -90,7 +90,7 @@ export default function Question({title,icon,questions}: Props) {
         </div> </> }
 
         {
-          (current===questions.length) &&
+          (currentQ.current===questions.length) &&
           <>
           <div>
             <h1 className="text-3xl">Quiz Completed</h1>

@@ -45,7 +45,7 @@ export default async function page({params:{topic}}:Props) {
       </label>
     </div>
     
-    <Question {...obj}/>
+    <Question title={obj.title} icon={obj.icon} questions={obj.questions}/>
 
     </>
   )
