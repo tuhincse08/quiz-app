@@ -2,6 +2,7 @@
 import { useState, useRef } from "react"
 import Link from "next/link";
 import Image from "next/image";
+import Options from "./Options";
 
 type Props = {
     title: string
@@ -18,7 +19,7 @@ export default function Question({title,icon,questions}: Props) {
     const [buttonType, setButtonType] = useState('Submit Answer');
     const [err,setErr] = useState('');
     const rightAns = useRef(0);
-    const letter = ['A','B','C','D'];
+    
 
     const handleClick = ()=>{
       const ele = document.querySelector<HTMLInputElement>('input[name=hosting]:checked')
@@ -68,20 +69,7 @@ export default function Question({title,icon,questions}: Props) {
         <div>
           
             {questions[currentQ.current].options.map((opt,index) =>
-        <>
-        <div className="mb-2">  
-
-        <input type="radio" id={"hosting-small" + currentQ.current+ index} name={"hosting"} value={opt} className="hidden peer"  />
-        <label htmlFor={"hosting-small"+currentQ.current+index} className="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-primary peer-checked:text-primary hover:text-gray-600 hover:bg-gray-100 ">                           
-            <div className="flex justify-start gap-3 items-center">
-                <label htmlFor={"hosting-small"+currentQ.current+index} className="px-3 py-2 bg-slate-200 text-gray-600 rounded peer-checked:bg-violet-500">{letter[index]}</label>
-                <div className="w-full text-lg font-semibold">{opt}</div>
-               
-            </div>
-            
-        </label></div>  
-    
-                </>
+              <Options key={index} index={index} opt={opt} />
                 )}
             <button type="submit"  onClick={handleClick} className="btn btn-primary mt-4">{buttonType}</button>
            <p id="err" className="text-red-400 mt-2 flex justify-start gap-2 items-center text-sm">{err && <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
