@@ -19,33 +19,37 @@ export default function Question({title,icon,questions}: Props) {
     const [buttonType, setButtonType] = useState('Submit Answer');
     const [err,setErr] = useState('');
     const rightAns = useRef(0);
+    const selected = useRef<number|null>(null)
+    //const 
     
 
     const handleClick = ()=>{
-      const ele = document.querySelector<HTMLInputElement>('input[name=hosting]:checked')
+      const ele = document.querySelector<HTMLInputElement>('input[name=option]:checked')
 
             if(buttonType ==='Next Question'){
               currentQ.current = currentQ.current + 1;
               if(ele)
                 ele.checked = false;
+
+                selected.current = null;
               setErr('');
               setButtonType('Submit Answer');
                return;
             }
-              
-              
-            
 
             if (!ele) {
               setErr('Please Select An Answer');
               return;
             }
+            selected.current = Number(ele.id);
+
             if(questions[currentQ.current].answer === ele?.value){
               rightAns.current = rightAns.current + 1;
               //ele.
             }
             else{
-              console.log("Wrong Answer")
+              
+              console.log("Wrong Answer" + ele.id)
             }
             ele.checked = false;
             setErr('');
@@ -69,8 +73,12 @@ export default function Question({title,icon,questions}: Props) {
         <div>
           
             {questions[currentQ.current].options.map((opt,index) =>
-              <Options key={index} index={index} opt={opt} />
-                )}
+             (
+             // if(selected.current === index && opt === questions[currentQ.current].answer) design = 'sr';
+              <Options key={index} index={index} selected={selected.current === index} result={opt === questions[currentQ.current].answer && buttonType ==='Next Question'} opt={opt} />
+             )
+              )}
+
             <button type="submit"  onClick={handleClick} className="btn btn-primary mt-4">{buttonType}</button>
            <p id="err" className="text-red-400 mt-2 flex justify-start gap-2 items-center text-sm">{err && <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>

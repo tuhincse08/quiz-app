@@ -35,7 +35,7 @@ export default async function Home() {
       <ul>
       {
         data.map((topic) =>
-        <Link href={`./quiz/${topic.title}`} className="flex justify-start items-center gap-2 bg-white text-slate-800 px-3 py-3 my-3 rounded-lg">
+        <Link key={topic.title} href={`./quiz/${topic.title}`} className="flex justify-start items-center gap-2 bg-white text-slate-800 px-3 py-3 my-3 rounded-lg">
           <div className="p-2 bg-slate-100 rounded">
           <Image src={topic.icon} 
           alt={topic.title} width={24}
